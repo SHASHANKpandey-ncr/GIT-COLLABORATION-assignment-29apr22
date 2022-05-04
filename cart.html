@@ -1,0 +1,102 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cart</title>
+</head>
+<body>
+    <h1>Total</h1>
+  <div id="product"></div>
+</body>
+</html>
+
+<script>
+    // cart page script
+
+var cart_data=JSON.parse(localStorage.getItem('masai_cart'))||[]
+
+function display(data)
+{
+    product.innerHTML=null;
+    data.forEach(function(ele){
+
+        const card = document.createElement('div');
+
+        const image = document.createElement('img');
+        image.src=ele.img
+
+        const brand = document.createElement('h2');
+        brand.innerText=ele.brand
+
+        const desc = document.createElement('p');
+        desc.innerText=ele.name
+
+        const price = document.createElement('h2');
+        price.innerText=ele.price
+
+        const catagory = document.createElement('h3');
+        catagory.innerText=ele.catagory
+
+        const button = document.createElement('button');
+        button.innerText='Delete'
+
+
+
+
+        button.addEventListener('click',function(event){
+                
+             Delete(ele.productID)
+        }) 
+
+
+        card.append(image,brand,desc,price,catagory,button)
+
+
+        product.append(card)
+    });
+}
+
+
+
+
+
+
+
+display(cart_data)
+
+
+
+
+      function Delete(id){
+ cart_data=cart_data.filter(function(ele){
+return ele.productID !=id
+            })
+                display(cart_data)
+                localStorage.setItem('masai_cart',JSON.stringify(cart_data))
+             
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+var sum=cart_data.reduce(function(a,ele){
+    return a+(+ele.price)
+},0)
+console.log(sum)
+document.querySelector('h1').innerText='Total :'+sum
+
+
+
+
+
+</script>
